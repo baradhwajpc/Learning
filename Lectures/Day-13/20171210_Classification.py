@@ -223,7 +223,7 @@ wine_cross_validate(KNeighborsClassifier(n_neighbors = 3)) #95.92
 ############## Logistic Regression ###############################3
 import os
 os.getcwd()
-os.chdir('C:\PYTHON\Data')
+os.chdir('G:\Python\Learning\Lectures\ML-Dataset')
 os.getcwd()
 #diabetes_data = pd.read_csv("data/diabetes_data.csv")
 diabetes_data = pd.read_csv("diabetes_data.csv")
