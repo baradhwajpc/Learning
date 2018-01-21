@@ -1,0 +1,47 @@
+## Regression model steps for training and test data
+
+Step -1 :Identify Dependent and independent variables
+Step -2 :Clean Data and plot a scatter data with entire data
+	2.1: Drop NaN values
+	2.2: Scatter plot with idv as x and dv as y
+Step -3 :Identify Training and Test data  
+    	3.1: Get the range of rows in the cleaned Dataframe all_rows = np.arange(df.shape[0])
+	3.2: 0.7 * df.shape[0] and 0.3 * df.shape[0] for training and test data . Get these ranges		
+	3.3: By Random sampling, we should seed a technique to be used for segregating training and test values
+	     np.random.seed(10) 10 -> seeding technique (any int)
+	3.4: Use random.choice to get the row index of training data np.random.choice(all_rows, training_data,replace=False)
+	     Replace -> avoid repeating  data
+	3.5: The remaining row index is assigned to test data done using all_rows[~np.in1d(all_rows , training)]. ! is not operator.
+	     Get all values not in the training data and save it as test data
+	3.6:Now that we have the row index, apply iloc to the parent data frame and get training dataframe and test dataframe
+Step -4: Calculating parameters and Model Generation :
+	4.1 : Calculate covariance and correlation in (idv).corr(dv)
+	  Correlation analysis
+		# Covariance helps measuing the releationship between variables
+		# Covar depends on the scale of data
+		# corrlelation is scaled covariance ranging -1 and 1
+		# -1 : String neg corr
+		# +1: Strong pos corr
+		# 0 - No corr  Note: -.5 to 0 to +.5 is the scale to inform no corr can be done
+		Note: Proceed with reg wien there is reasonably strong corr
+	4.2 : Generate Model : dv ~ idv
+	4.3 :  Note R-squared value: 
+		# R Squareed is the standard metric to measure a good fit
+		# It should ideally be greater than 0.5 for a ok fit 
+		# If 0 it is a bad model
+		# 1 is a good mode
+	4.4 : Deduce the formula and 
+	        *B = m * x +C
+	        *IIV = m * DV + C
+	        * In coef column, value in the intercept row denoted C in formula
+		* The value below it is x
+		* P value :
+			If p is greater than 0.95 , I accpet null hypothisis with 95 % confidence
+			If p is less than 0.95 , I reject null hypothisis with 95 % confidence
+Step 5:Evaluate With Test Data
+        5.1: Copy test dataset to a new dataset with index, dv and idv columns
+	5.2: Create dataframe by applying predict method of model on the dataset created in the previous step . 
+	     This is predicted testing data for dependent variable
+	5.3: Calculate absolute error in test data by finding the difference between (actual dependent variable - predicted testing data for dependent variable) / actual dependent variable
+	5.4: Calculate the mean value of the previous step . This is mape - MEan Absolute percentage error.
+	5.5: Plot a scatter with both actual dependent variable and predicted dependent variable

@@ -1,0 +1,31 @@
+############################################
+
+1. Less fatalities with more injury
+
+2. More fatalities with Less injury
+
+3. Which state has max no.of injury
+
+4. Which state has mmin no of.injury
+
+5. Which state payed least penality for more accident
+
+5. Which state payed most penality for less accident
+
+6. Sort State : penality based on no . of injury (ascending)
+
+7. State fatality count 
+
+8. Fedaral fatality count 
+
+9. State  or Fedaral paid more penality
+
+10. State  or Fedaral paid more injury
+-------------------------------------------------------
+****************************************************
+1. What is the average Number of Injuries/Illnesses in 2012 for federal places
+2. Which state or federal had highest penalties for year 2013
+3. Compare number of inspectors between State and Federal (Total number of inspectors in state and federal)
+4. What is the number of fatalities of the state which paid highest penalties
+
+-------------------------------------------------------

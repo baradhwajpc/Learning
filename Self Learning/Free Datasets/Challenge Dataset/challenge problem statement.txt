@@ -1,0 +1,2 @@
+Read the challenge dataset which contains CO2 emissions(first column), Global temperature(second Column) of different years. 
+Create a linear model to find out the global temparature based on the CO2 emissions

@@ -1,0 +1,15 @@
+# Change dir and read file
+# Change headers
+# Fill out missing values with avg value
+# Least no of injuries
+# Average number of Injury   all state
+# Most no of injuries
+# Average number of Injury   all state
+# Top 3 penality paying state by avg
+# Top 3 Least penality paying state by rank
+# States with top 5 inspectors
+# Relate Injuries/Illnesses Rate by State Fedaral Program
+# Relate Number of Injuries/Illnesses by State Fedaral Program
+# Relate Number of Fatalities by State Fedaral Program
+# Relate Penalties FY (Rank) by State Fedaral Program
+# Compare Number of Fatalities by State Federal Program

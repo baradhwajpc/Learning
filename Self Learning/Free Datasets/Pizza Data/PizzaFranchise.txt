@@ -1,0 +1,5 @@
+In the following data
+X = annual franchise fee ($1000)
+Y = start up cost ($1000)
+for a pizza franchise
+Reference: Business Opportunity Handbook

@@ -1,0 +1,15 @@
+# read and print initial data load
+# Manually introduced 2 new columns avgAge and legal
+# Fill empty values in all columns
+# Datas with hypens should be removed and replaced - manual operation  - Should ask clarification if it can be automated
+# Which age group has maximum sample data
+# Age grooup with max alchol use
+# Age  with alcohol use above average alcohol use  and tranquilizer-use below tranquilizer-use
+## Less meth use and more inhalat use
+## Less alcohol and more sedatives
+## Tried out random graphs
+# inhalant use by age
+# cocain and tranquilizer use based on legality
+# Show the relation between alcohol use and age
+# Show relation with avgAge  and frequencies of 5 addictions
+# Try Combined  all plots in 1 plot with line or scatter
