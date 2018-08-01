@@ -1,0 +1,51 @@
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.testing.decorators import image_comparison
+
+@image_comparison(baseline_images=['Iris_Sepal_Length_BarPlot'],extensions=['png'])
+def test_barplot_of_iris_sepal_length():
+    # Write your functionality below
+    fig = plt.figure(figsize=(8,6))
+    ax = fig.add_subplot(111)
+    species = ['setosa', 'versicolor', 'viriginica']
+    sepal_len = [5.01, 5.94, 6.59]
+    ax.bar(species, sepal_len,color='red',edgecolor='black',width=0.5)
+    ax.set(title='Mean Sepal Length of Iris Species',
+      xlabel='Species', ylabel='Sepal Length (cm)')
+    plt.show()
+@image_comparison(baseline_images=['Iris_Measurements_BarPlot'],extensions=['png'])
+def test_barplot_of_iris_measurements():
+    # Write your functionality below
+    fig = plt.figure(figsize=(8,6))
+    ax = fig.add_subplot(111)
+    sepal_len = [5.01, 5.94, 6.59]
+    sepal_wd = [3.42, 2.77, 2.97]
+    petal_len = [1.46, 4.26, 5.55]
+    petal_wd = [0.24, 1.33, 2.03]
+    species = ['setosa', 'versicolor', 'viriginica']
+    species_index1 = [0.7, 1.7, 2.7]
+    species_index2 = [0.9, 1.9, 2.9]
+    species_index3 = [1.1, 2.1, 3.1]
+    species_index4 = [1.3, 2.3, 3.3]
+    ax.bar(species_index1, sepal_len,color='c',edgecolor='black',width=0.2,label='Sepal Length')
+    ax.bar(species_index2, sepal_wd,color='m',edgecolor='black',width=0.2,label='Sepal Width')
+    ax.bar(species_index3, petal_len,color='y',edgecolor='black',width=0.2,label='Petal Length')
+    ax.bar(species_index4, petal_wd,color='orange',edgecolor='black',width=0.2,label='Petal Width')
+    ax.set(title='Mean Measurements of Iris Species',
+      xlabel='Species', ylabel='Iris Measurements (cm)')
+    ax.set_yticklabels(['1', '2', '3'])
+    ax.set_xticklabels(['setosa', 'versicolor', 'viriginica'])
+    ax.legend()
+    
+@image_comparison(baseline_images=['Iris_Petal_Length_BarPlot'],extensions=['png'])
+def test_hbarplot_of_iris_petal_length():
+    # Write your functionality below
+    fig = plt.figure(figsize=(12,3))
+    ax = fig.add_subplot(111)
+    species = ['setosa', 'versicolor', 'viriginica']
+    petal_len = [1.46, 4.26, 5.55]
+    ax.barh(species, petal_len,color='c',edgecolor='black',height=0.5,label='Sepal Length')
+    ax.set(title='Mean Petal Length of Iris Species',
+      xlabel='Species', ylabel='Petal Length (cm)')

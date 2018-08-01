@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 
 
 os.getcwd()
-os.chdir("G:\Python-Learning\Lectures\Day-6")
-wg_Data = pd.read_csv("data\\wg.csv")
+os.chdir("G:\Python\Learning\Lectures\Day-6\data")
+wg_Data = pd.read_csv("wg.csv")
 print(wg_Data)
 
 print(wg_Data['wg'].isnull().sum())
@@ -110,8 +110,8 @@ plt.scatter('metmin','wg',data=wgClean,c="color")
 
 
 os.getcwd()
-os.chdir("G:\Python-Learning\Lectures\Day-6")
-stock_Data = pd.read_csv("data\\Stock_Price.csv")
+os.chdir("G:\Python-Learning\Lectures\Day-6\data")
+stock_Data = pd.read_csv("Stock_Price.csv")
 print(stock_Data)
 
 stock_plot = stock_Data['DELL'].plot.line()

@@ -31,7 +31,7 @@ feature_algo_wo_stopwords.vocabulary_
 
 
 freq = nltk.FreqDist(feature_algo_wo_stopwords.vocabulary_)
-freq.plot(30, cumulative=False)
+#freq.plot(100, cumulative=False)
 
 ## The word cloud decipts the most words used in all speeches
 from wordcloud import WordCloud
@@ -67,18 +67,28 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import metrics
 from nltk.tokenize import word_tokenize
-
-tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-for trainTalk in train_tedTalk['transcript']: 
-    #text = tokenizer.tokenize(trainTalk)
-    sentences = sent_tokenize(trainTalk)
-    # Get words from sentence
-    tokens = word_tokenize(sentences)
-    # Remove non alphabets in words
-    words = [word for word in tokens if word.isalpha()]
-    print(words)
-
-
+import string
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+import re
+for trainTalk in train_tedTalk['transcript']:
+    tokens = word_tokenize(trainTalk)
+    # convert to lower case
+    tokens = [w.lower() for w in tokens]
+    # remove punctuation from each word
+    table = str.maketrans('', '', string.punctuation)
+    stripped = [w.translate(table) for w in tokens]
+    # remove remaining tokens that are not alphabetic
+    words = [word for word in stripped if word.isalpha()]
+    # filter out stop words
+    stop_words = set(stopwords.words('english'))
+    more_stopwords = "applause"
+    stop_words.update(more_stopwords.split())
+    words = [w for w in words if not w in stop_words]
+    porter = PorterStemmer()
+    stemmed = [porter.stem(word) for word in tokens]
+    print(stemmed)
 #classifier = NaiveBayesClassifier.train(tedTranscripts_70['transcript'])
 #print 'accuracy:', nltk.classify.util.accuracy(classifier, tedTranscripts_70['transcript'])
 #classifier.show_most_informative_features()
+

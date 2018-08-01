@@ -1,0 +1,37 @@
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.testing.decorators import image_comparison
+
+#@image_comparison(baseline_images=['Histogram'],extensions=['png'])
+def test_hist_of_a_sample_normal_distribution():
+    # Write your functionality below
+    fig = plt.figure(figsize=(8,6))
+    ax = fig.add_subplot(111)
+    np.random.seed(100)
+    x1 = np.random.normal(loc = 25, scale= 3.0, size=1000)
+    plt.hist(x1,bins=30)
+    
+    ax.set_xlabel('X1')
+    ax.set_ylabel('BinCount')
+    ax.set_title('Histogram of a Single Dataset')
+    plt.show()
+#@image_comparison(baseline_images=['Boxplot'],extensions=['png'])
+def test_boxplot_of_four_normal_distribution():
+    # Write your functionality below
+    fig = plt.figure(figsize=(8,6))
+    ax = fig.add_subplot(111)
+    np.random.seed(100)
+    x1= np.random.randn(25,3,1000)
+    x2= np.random.randn(35,5,1000)
+    x3= np.random.randn(55,10,1000)
+    x4= np.random.randn(45,3,1000)
+    labels = ['X1','X2','X3','X4']
+    data = [x1,x2,x3,x4]
+    ax.boxplot(data,1,sym='+',patch_artist=True)
+    ax.set_xlabel('Dataset')
+    ax.set_ylabel('Value')
+    ax.set_title('Box plot of Multiple Datasets')
+    plt.show()
+
