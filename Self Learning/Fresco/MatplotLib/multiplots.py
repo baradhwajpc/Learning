@@ -73,25 +73,26 @@ def test_generate_figure2():
     x = np.random.rand(10)
     y = np.random.rand(10)
     z = np.sqrt(x**2 + y**2)
+    
     fig = plt.figure(figsize=(8,6))
     axes1 = plt.subplot(2, 2, 1, title='Scatter plot with Upper Traingle Markers')
     axes1.set_xticklabels([0.0, 0.4, 0.8, 1.2])
     axes1.set_yticklabels([-0.2, 0.2, 0.6, 1.0])
-    axes1.scatter(x, y,s=80,c='z',marker = '^')
+    axes1.scatter(x, y,s=80,marker ='^',c=z)
     
 
     axes2 = plt.subplot(2, 2, 2, title='Scatter plot with Plus Markers')
-    axes2.scatter(x, y,s=80,c='z',marker = '+')
+    axes2.scatter(x, y,s=80,marker = '+',c=z)
     axes2.set_xticklabels([0.0, 0.4, 0.8, 1.2])
     axes2.set_yticklabels([-0.2, 0.2, 0.6, 1.0])
     
     axes3 = plt.subplot(2, 2, 3, title='Scatter plot with Circle Markers')
-    axes3.scatter(x, y,s=80,c='z',marker = 'o')
+    axes3.scatter(x, y,s=80,marker = 'o',c=z)
     axes3.set_xticklabels([0.0, 0.4, 0.8, 1.2])
     axes3.set_yticklabels([-0.2, 0.2, 0.6, 1.0])
     
-    axes4 = plt.subplot(2, 2, 3, title='Scatter plot with Diamond Markers')
-    axes4.scatter(x, y,s=80,c='z',marker = 'd')
+    axes4 = plt.subplot(2, 2, 4, title='Scatter plot with Diamond Markers')
+    axes4.scatter(x, y,s=80,marker = 'd',c=z)
     axes4.set_xticklabels([0.0, 0.4, 0.8, 1.2])
     axes4.set_yticklabels([-0.2, 0.2, 0.6, 1.0])
 
@@ -110,23 +111,47 @@ Define another numpy array 'y1' with expression 'y1 = x'.
 Define another numpy array 'y2' with expression 'y1 = x**2'.
 Define another numpy array 'y3' with expression 'y1 = x**3'.
 Create a figure of size 8 inches in width, and 6 inches in height. Name it as `fig`.
-Define a grid 'g' of 2 rows and 2 columns, using 'GridSpec' function. Make sure you have imported 'matplotlib.gridspec', before defining the grid.
-Create an axes, using `plt.subplot` function. Name it as `axes1`. The subplot must span 1st row and 1st column of defined grid 'g'. Set 'title' argument to 'y = x'.
+
+Define a grid 'g' of 2 rows and 2 columns, using 'GridSpec' function
+ Make sure you have imported 'matplotlib.gridspec', before defining the grid.
+ 
+ 
+Create an axes, using `plt.subplot` function. Name it as `axes1`. 
+The subplot must span 1st row and 1st column of defined grid 'g'. Set 'title' argument to 'y = x'.
 Draw a line plot of 'x' and 'y1' using 'plot' function on 'axes1`.
-Create an axes, using `plt.subplot` function. Name it as `axes2`. The subplot must span 2nd row and 1st column of defined grid 'g'. Set 'title' argument to 'y = x**2'.
+
+Create an axes, using `plt.subplot` function. Name it as `axes2`. 
+The subplot must span 2nd row and 1st column of defined grid 'g'. Set 'title' argument to 'y = x**2'.
 Draw a line plot of 'x' and 'y2' using 'plot' function on 'axes2`.
-Create an axes, using `plt.subplot` function. Name it as `axes3`. The subplot must span all rows of 2nd column of defined grid 'g'. Set 'title' argument to 'y = x**3'.
+Create an axes, using `plt.subplot` function. Name it as `axes3`. 
+The subplot must span all rows of 2nd column of defined grid 'g'. Set 'title' argument to 'y = x**3'.
 Draw a line plot of 'x' and 'y3' using 'plot' function on 'axes3`.
 Adjust the entire layout with expression 'plt.tight_layout()'.
 '''
 
-@image_comparison(baseline_images=['Multiple_Plots_Figure3'],extensions=['png'])
+import matplotlib.gridspec as gridspec
+#@image_comparison(baseline_images=['Multiple_Plots_Figure3'],extensions=['png'])
 def test_generate_figure3():
 
     # Write your functionality below
-    
+    x = np.arange(1,101)
+    y1 = np.array(x)
+    y2  =  np.array(x**2)
+    y3  =  np.array(x**3)
+    fig = plt.figure(figsize=(8,6))
+    g = gridspec.GridSpec(2, 2)    
+    #ax = plt.subplot(gs[0, 0])
+    axes1 = plt.subplot(g[0,0], title='y=x')
+    axes1.plot(x,y1)
+    axes2 = plt.subplot(g[1,0], title='y=x**2')
+    #axes2 = plt.subplot(2,1,2, title='y=x**2')
+    axes2.plot(x,y2)
+   # axes3 = plt.subplot(2,2,3, title='y=x**3')
+    axes3 = plt.subplot(g[1,1], title='y=x**2')
+    axes3.plot(x,y3)    
+    plt.tight_layout()
 test_generate_figure3()
-
+   
 
 
 fig = plt.figure(figsize=(10,8))
