@@ -23,8 +23,8 @@ def test_generate_plot_with_style1():
         ax.bar(species_index2, sepal_wd,width=0.2,label='Sepal Width')
         ax.bar(species_index3, petal_len,width=0.2,label='Petal Length')
         ax.bar(species_index4, petal_wd,width=0.2,label='Petal Width')
-        ax.set(title='Mean Measurment of Iris Species',
-            xlabel='Species', ylabel='Iris Measurments(cm)')
+        ax.set(title='Mean Measurements of Iris Species',
+            xlabel='Species', ylabel='Iris Measurements (cm)')
         ax.set_xlim([0.5,3.7])
         ax.set_ylim([0,10])
         #ax.set_xticks(species_index3)
@@ -52,8 +52,8 @@ def test_generate_plot_with_style2():
         ax.bar(species_index2, sepal_wd,width=0.2,label='Sepal Width')
         ax.bar(species_index3, petal_len,width=0.2,label='Petal Length')
         ax.bar(species_index4, petal_wd,width=0.2,label='Petal Width')
-        ax.set(title='Mean Measurment of Iris Species',
-            xlabel='Species', ylabel='Iris Measurments(cm)')
+        ax.set(title='Mean Measurements of Iris Species',
+            xlabel='Species', ylabel='Iris Measurements (cm)')
         ax.set_xlim([0.5,3.7])
         ax.set_ylim([0,10])
         #ax.set_xticks(species_index3)
@@ -81,8 +81,8 @@ def test_generate_plot_with_style3():
         ax.bar(species_index2, sepal_wd,width=0.2,label='Sepal Width')
         ax.bar(species_index3, petal_len,width=0.2,label='Petal Length')
         ax.bar(species_index4, petal_wd,width=0.2,label='Petal Width')
-        ax.set(title='Mean Measurment of Iris Species',
-            xlabel='Species', ylabel='Iris Measurments(cm)')
+        ax.set(title='Mean Measurements of Iris Species',
+            xlabel='Species', ylabel='Iris Measurements (cm)')
         ax.set_xlim([0.5,3.7])
         ax.set_ylim([0,10])
         #ax.set_xticks(species_index3)
