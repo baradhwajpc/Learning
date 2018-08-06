@@ -101,9 +101,9 @@ def test_multi_curve_plot():
     y1 =   np.array(x)
     y2  =  np.array(x**2)
     y3  =  np.array(x**3)
-    ax.plot(x, y1,marker = 'o',c='red',label='y=x')
-    ax.plot(x, y2,marker = 's',c='green',label='y=x**2')
-    ax.plot(x, y3,marker = '^',c='blue',label='y=x**3')
+    ax.plot(x, y1,marker = 'o',c='red',label='y = x')
+    ax.plot(x, y2,marker = 's',c='green',label='y = x**2')
+    ax.plot(x, y3,marker = '^',c='blue',label='y = x**3')
     ax.set_xlabel('X')
     ax.set_ylabel('f(X)')
     ax.set_title('Linear, Quadratic, & Cubic Equations')
@@ -126,3 +126,20 @@ def test_scatter_plot():
     ax.set_title("Cars Sold by Company 'X' in 2017")
     
     
+    
+    
+    
+    
+    fig = plt.figure(figsize=(12,3))
+    ax = fig.add_subplot(111)
+    x = np.array(np.linspace(0.0, 5.0, num=20))
+    y1 =   np.array(x)
+    y2  =  np.array(x**2)
+    y3  =  np.array(x**3)
+    ax.plot(x, y1,marker = 'o',c='red',label='y=x')
+    ax.plot(x, y2,marker = 's',c='green',label='y=x**2')
+    ax.plot(x, y3,marker = '^',c='blue',label='y=x**3')
+    ax.set_xlabel('X')
+    ax.set_ylabel('f(X)')
+    ax.set_title('Linear, Quadratic, & Cubic Equations')
+    ax.legend(loc='upper right')
