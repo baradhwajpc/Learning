@@ -10,8 +10,11 @@ import requests
 import re
 import seaborn as sns
 
-r = requests.get('https://coinmarketcap.com/')
-soup = BeautifulSoup(r.content,"lxml")
+
+soup = BeautifulSoup(open('G:\\new.html',encoding='utf-8'), "html.parser")
+
+#r = requests.get('https://coinmarketcap.com/')
+#soup = BeautifulSoup(r.content,"lxml")
 sp_Obj = []
 
 for i in soup.find_all('tr'): # list element
@@ -27,13 +30,14 @@ supply = []                  #List for Circulating supply
 change = []                  #List for Change(24h)
 
 for row in sp_Obj[1:]:
-    rank.append(row.findAll('td')[0].get_text().strip(" "))
-    currency_name.append(row.findAll('td')[1].get_text().strip(" "))
-    market_cap.append(row.findAll('td')[2].get_text().strip(" "))
-    price.append(row.findAll('td')[3].get_text().strip(" "))
-    volume.append(row.findAll('td')[4].get_text().strip(" "))
-    supply.append(row.findAll('td')[5].get_text().strip(" "))
-    change.append(row.findAll('td')[6].get_text().strip(" "))
+    rank.append(row.findAll('td')[0].get_text().strip(" ").replace('\n', ''))
+    cName = row.findAll('td')[1].get_text().strip(" ").splitlines()
+    currency_name.append(cName[-1])
+    market_cap.append(row.findAll('td')[2].get_text().strip(" ").replace('\n', ''))
+    price.append(row.findAll('td')[3].get_text().strip(" ").replace('\n', ''))
+    volume.append(row.findAll('td')[4].get_text().strip(" ").replace('\n', ''))
+    supply.append(row.findAll('td')[5].get_text().strip(" ").replace('\n', ''))
+    change.append(row.findAll('td')[6].get_text().strip(" ").replace('\n', ''))
     
     df = pd.DataFrame({
                          'rank' : rank,
@@ -44,29 +48,49 @@ for row in sp_Obj[1:]:
                          'supply' : supply,
                          'change' : change
                          })
-    '''
-    rgx_match = ['$','%']
-    df['change'] = re.sub('$', '', df['change'])
-    df['change'] = df['change'].map(lambda x: re.sub(r'\W+', '', x))
-    '''
     
-    df['change'] = df['change'].str.replace('%', '') 
-    df['market_cap'] = df['market_cap'].str.replace('$', '')
-    df['market_cap'] = df['market_cap'].str.replace(',', '')
-    df['price'] = df['price'].str.replace('$', '')   
-    df['supply'] = df['supply'].str.replace(',', '')   
-    df['volume'] = df['volume'].str.replace('$', '')
-    df['volume'] = df['volume'].str.replace(',', '')
-   
-    df.convert_objects(convert_numeric=True)
-    #df.convert_objects(convert_numeric=True).dtypes
+     
+    newv =[]
+    for v in df['volume']:
+        newv.append(re.sub('[^0-9]', '', v))
+    df['volume'] = newv
     
-    df['change'] = pd.to_numeric(df['change'])
+
+    newc =[]
+    for v in df['change']:
+        v = re.sub('[%]', '', v)
+        #newV = float(v)
+        newc.append(v)
+    df['change'] = newc
+    
+
+    newmc =[]
+    for v in df['market_cap']:
+        newmc.append(re.sub('[^0-9]', '', v))
+    df['market_cap'] = newmc
+    
+    newpc =[]
+    for v in df['price']:
+        v = re.sub('[$,]', '', v)
+        #newV = float(v)
+        newpc.append(v)
+    df['price'] = newpc
+
+    news =[]
+    for v in df['supply']:
+        news.append(re.sub('[^0-9]', '', v))
+    df['supply'] = news
+
+
+
+
+    #cryptodf.convert_objects(convert_numeric=True)
     df['market_cap'] = pd.to_numeric(df['market_cap'])
-    df['price'] = pd.to_numeric(df['price'])
     df['supply'] = pd.to_numeric(df['supply'])
     df['volume'] = pd.to_numeric(df['volume'])
 
+    
+    
     
     ''' Plots '''
     
@@ -98,3 +122,7 @@ for row in sp_Obj[1:]:
     barPlotVals = df.sort_values('change', ascending=False).head(10)
     ax2 = sns.barplot(data=barPlotVals, x='change', y='currency_name')
     return ax2
+    
+    aa = 5.755e+03
+df['newPrice'] = df['price'].apply(lambda x: '{:.2f}'.format(x))
+print(ab) 

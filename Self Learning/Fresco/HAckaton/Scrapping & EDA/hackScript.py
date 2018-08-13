@@ -141,9 +141,13 @@ def transform_cryptodf(cryptodf):
     
     newpc =[]
     for v in cryptodf['price']:
-        newpc.append(re.sub('[^0-9]', '', v))
-    cryptodf['price'] = newv
-    
+        #string = "You get #{turns} guesses."
+        re.sub(r'%\S+ ', r'', v)
+        #v = re.sub('[^0-9]', '', v)
+        #newV = float(v)
+        newpc.append(v)
+        #print(newV)
+    cryptodf['price'] = newpc
 
     news =[]
     for v in cryptodf['supply']:
@@ -254,15 +258,17 @@ def main():
     crypto_df = convert_tr_elements_to_cryptodf(crypto_containers)
 
     crypto_df = transform_cryptodf(crypto_df)
-
+    cr8 = pd.DataFrame(crypto_df.sort_values('change', ascending=False))
+    
     plot1 = draw_barplot_top10_cryptocurrencies_with_highest_market_value(crypto_df)
 
     plot2 = draw_scatterplot_trend_of_price_with_market_value(crypto_df)
 
     plot3 = draw_scatterplot_trend_of_price_with_volume(crypto_df)
     
-    #cr7 = crypto_df.sort_values('change', ascending=False).head(10)
-    #print(cr7)
+    cr7 = pd.DataFrame(crypto_df.sort_values('change', ascending=False).head(10))
+    print(cr7)
+    #print(crypto_df.sort_values('change', ascending=False).head(10))
     plot4 = draw_barplot_top10_cryptocurrencies_with_highest_positive_change(crypto_df.sort_values('change', ascending=False).head(10))
 
     serialize_plot(plot1, "plot1.pk")
@@ -278,6 +284,14 @@ def main():
     serialize_plot(plot4, "plot4.pk")
 
 if __name__ == '__main__':
+    crypto_df = []
     main()
-
     
+    
+'''
+import pandas as pd
+print "Hello World!\n"
+aa = 5.755e+03
+ab = aa.apply(lambda x: '{:.2f}'.format(x))
+print(ab) 
+'''
