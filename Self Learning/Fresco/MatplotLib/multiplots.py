@@ -22,18 +22,14 @@ from matplotlib.testing.decorators import image_comparison
 
 #@image_comparison(baseline_images=['Multiple_Plots_Figure1'],extensions=['png'])
 def test_generate_figure1():
-
-    # Write your functionality below
-    t = np.arange(0.01, 5.0, 0.01)
+    t = np.arange(0.0, 5.0, 0.01)
     s1 = np.sin(2*np.pi*t)
     s2 = np.sin(4*np.pi*t)
     fig = plt.figure(figsize=(8,6))
     axes1 = plt.subplot(2, 1, 1, title='Sin(2*pi*x)')
-    
     axes2 = plt.subplot(2, 1, 2, title='Sin(4*pi*x)',sharex=axes1,sharey=axes1)
     axes1.plot(t, s1)
     axes2.plot(t, s2)
-    plt.show()
 test_generate_figure1()
 '''
 Set random seed to 1000 using the expression 'np.random.seed(1000)'.
@@ -76,26 +72,24 @@ def test_generate_figure2():
     
     fig = plt.figure(figsize=(8,6))
     axes1 = plt.subplot(2, 2, 1, title='Scatter plot with Upper Traingle Markers')
-    axes1.set_xticklabels([0.0, 0.4, 0.8, 1.2])
-    axes1.set_yticklabels([-0.2, 0.2, 0.6, 1.0])
-    axes1.scatter(x, y,s=80,marker ='^',c=z)
-    
+    plt.scatter(x, y,s=80,marker ='^',c=z)
+    plt.xticks([0.0, 0.4, 0.8, 1.2])
+    plt.yticks([-0.2, 0.2, 0.6, 1.0])
 
     axes2 = plt.subplot(2, 2, 2, title='Scatter plot with Plus Markers')
-    axes2.scatter(x, y,s=80,marker = '+',c=z)
-    axes2.set_xticklabels([0.0, 0.4, 0.8, 1.2])
-    axes2.set_yticklabels([-0.2, 0.2, 0.6, 1.0])
+    plt.scatter(x, y,s=80,marker = '+',c=z)
+    plt.xticks([0.0, 0.4, 0.8, 1.2])
+    plt.yticks([-0.2, 0.2, 0.6, 1.0])
     
     axes3 = plt.subplot(2, 2, 3, title='Scatter plot with Circle Markers')
-    axes3.scatter(x, y,s=80,marker = 'o',c=z)
-    axes3.set_xticklabels([0.0, 0.4, 0.8, 1.2])
-    axes3.set_yticklabels([-0.2, 0.2, 0.6, 1.0])
+    plt.scatter(x, y,s=80,marker = 'o',c=z)
+    plt.xticks([0.0, 0.4, 0.8, 1.2])
+    plt.yticks([-0.2, 0.2, 0.6, 1.0])
     
     axes4 = plt.subplot(2, 2, 4, title='Scatter plot with Diamond Markers')
-    axes4.scatter(x, y,s=80,marker = 'd',c=z)
-    axes4.set_xticklabels([0.0, 0.4, 0.8, 1.2])
-    axes4.set_yticklabels([-0.2, 0.2, 0.6, 1.0])
-
+    plt.scatter(x, y,s=80,marker = 'd',c=z)
+    plt.xticks([0.0, 0.4, 0.8, 1.2])
+    plt.yticks([-0.2, 0.2, 0.6, 1.0])
     plt.tight_layout()
     
 test_generate_figure2()
@@ -132,34 +126,19 @@ Adjust the entire layout with expression 'plt.tight_layout()'.
 import matplotlib.gridspec as gridspec
 #@image_comparison(baseline_images=['Multiple_Plots_Figure3'],extensions=['png'])
 def test_generate_figure3():
-
-    # Write your functionality below
     x = np.arange(1,101)
     y1 = np.array(x)
     y2  =  np.array(x**2)
     y3  =  np.array(x**3)
     fig = plt.figure(figsize=(8,6))
-    g = gridspec.GridSpec(2, 2)    
+    g = gridspec.GridSpec(2, 2)
     #ax = plt.subplot(gs[0, 0])
-    axes1 = plt.subplot(g[0,0], title='y=x')
+    axes1 = plt.subplot(g[0,0], title='y = x')
     axes1.plot(x,y1)
-    axes2 = plt.subplot(g[1,0], title='y=x**2')
+    axes2 = plt.subplot(g[1,0], title='y = x**2')
     #axes2 = plt.subplot(2,1,2, title='y=x**2')
     axes2.plot(x,y2)
    # axes3 = plt.subplot(2,2,3, title='y=x**3')
-    axes3 = plt.subplot(g[1,1], title='y=x**2')
-    axes3.plot(x,y3)    
+    axes3 = plt.subplot(g[:,1], title='y = x**3')
+    axes3.plot(x,y3)
     plt.tight_layout()
-test_generate_figure3()
-   
-
-
-fig = plt.figure(figsize=(10,8))
-axes1 = plt.subplot(2, 1, 1, title='Plot1')
-axes2 = plt.subplot(2, 1, 2, title='Plot2')
-plt.show()
-axes2 = plt.subplot(2, 2, 3, title='Plot2')
-axes2.set_xticks([]); axes2.set_yticks([])
-axes3 = plt.subplot(2, 2, 4, title='Plot3')
-axes3.set_xticks([]); axes3.set_yticks([])
-    
