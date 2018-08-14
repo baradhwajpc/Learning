@@ -140,9 +140,7 @@ def transform_cryptodf(cryptodf):
         news.append(re.sub('[^0-9]', '', v))
     cryptodf['supply'] = news
     
-    #cryptodf['change'] = pd.to_numeric(cryptodf['change'])
     cryptodf['market_cap'] = pd.to_numeric(cryptodf['market_cap'])
-    #cryptodf['price'] = pd.to_numeric(cryptodf['price'])
     cryptodf['supply'] = pd.to_numeric(cryptodf['supply'])
     cryptodf['volume'] = pd.to_numeric(cryptodf['volume'])
 
@@ -156,16 +154,10 @@ def draw_barplot_top10_cryptocurrencies_with_highest_market_value(cryptocur_df):
     # Order the cryptocurrencies in Descending order. i.e
     # bar corresponding to cryptocurrency with highest market value must be on top of bar plot.
     # Write the functionality below
-    '''
+    
     barPlotVals = cryptocur_df.sort_values('market_cap', ascending=False).head(10)
     ax = sns.barplot(x='market_cap', y='currency_name', data=barPlotVals)
     return ax
-    '''
-    
-    barPlotVals = cryptocur_df.sort_values('market_cap', ascending=False).head(10)
-    ax0 = sns.barplot(x='market_cap', y='currency_name', data=barPlotVals)
-    #print(barPlotVals['currency_name'])
-    return ax0
 
 def draw_scatterplot_trend_of_price_with_market_value(cryptocur_df):
     '''
@@ -176,11 +168,12 @@ def draw_scatterplot_trend_of_price_with_market_value(cryptocur_df):
     # Set the plot size to 10 inches in width and 2 inches in height respectively.
     # Write the functionality below
     
-    scatterPlotVals = cryptocur_df.sort_values('market_cap', ascending=False).head(50)
-    ax = sns.lmplot(x='price', y='market_cap', data=scatterPlotVals,
-           fit_reg=False)
+    plotDf =cryptocur_df.sort_values('volume', ascending=False).head(50)[['market_cap','price']]
+    ax = sns.pairplot(plotDf, x_vars=['market_cap'], y_vars=['price'])
     ax.fig.set_size_inches(10,2)
+    print(ax.data.values)
     return ax
+    
 
 def draw_scatterplot_trend_of_price_with_volume(cryptocur_df):
     '''
@@ -191,16 +184,17 @@ def draw_scatterplot_trend_of_price_with_volume(cryptocur_df):
     # Set the plot size to 10 inches in width and 2 inches in height respectively.
 
     # Write the functionality below
-    ax1 = sns.lmplot(x='price', y='volume', data=cryptocur_df)
-    ax1.fig.set_size_inches(10,2)
-    return ax1
+    plotDF =cryptocur_df.sort_values('market_cap', ascending=False)[['volume','price']]
+    ax = sns.pairplot(plotDF, x_vars=['volume'], y_vars=['price'])
+    ax.fig.set_size_inches(10,2)
+    return ax
+    
 
 
 def draw_barplot_top10_cryptocurrencies_with_highest_positive_change(cryptocur_df):
     '''
     Returns a bar plot
     '''
-
     # Create a horizontal bar plot using seaborn showing
     # Top 10 Cryptocurrencies with positive change in last 24 hours.
     # Order the cryptocurrencies in Descending order. i.e
@@ -208,13 +202,10 @@ def draw_barplot_top10_cryptocurrencies_with_highest_positive_change(cryptocur_d
     # Write the functionality below
     
     barPlotVals = cryptocur_df.sort_values('change', ascending=False).head(10)
-    #print(barPlotVals['change'])
     ax = sns.barplot(x='change', y='currency_name', data=barPlotVals)
-    ax.get_xaxis().get_major_formatter().set_scientific(False)
-    #ax.get_yaxis().get_major_formatter().set_scientific(False)
+    al = list(ax.get_xticklabels())
     return ax
 
-    
 def serialize_plot(plot, plot_dump_file):
     '''
     Dumps the 'plot' object in to 'plot_dump_file' using pickle.
