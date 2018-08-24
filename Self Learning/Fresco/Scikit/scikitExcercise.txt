@@ -1,0 +1,340 @@
+1. Pre Processing Excersice:
+
+Import two modules sklearn.datasets, and sklearn.preprocessing.
+Load popular iris data set from sklearn.datasets module and assign it to variable 'iris'.
+Perform Imputation on 'iris.data' and save the transformed data in variable 'iris_imputed'. - Hint : use Imputer API, Replace np.NaN values with mean of corresponding data.
+
+import sklearn.datasets as datasets
+
+import sklearn.preprocessing as pre
+
+iris = datasets.load_iris()
+
+imputer = pre.Imputer(missing_values='NaN', strategy='mean')
+
+imputer = imputer.fit(iris.data)
+
+iris_imputed = imputer.transform(iris.data)
+
+print(iris_imputed)
+
+----------------------------------------------------------------------------------------------------------------
+2. 
+Perform Standardization transformation on iris.data with l2 norm and save the transformed data in variable iris_standarized.
+Hint: Use StandardScaler API.
+
+import sklearn.datasets as datasets
+import sklearn.preprocessing as pre
+iris = datasets.load_iris()
+standardizer = pre.StandardScaler()
+iris_standarized = pre.Normalizer(norm="l2").transform(iris.data)
+print(iris_standarized)
+
+----------------------------------------------------------------------------------------------------------------
+3.
+
+Convert the categorical integer list iris.target into three binary attribute representation and store the result in variable iris_target_onehot.
+
+Hint: Use reshape(-1,1) on iris.target and OneHotEncoder.
+Transform iris_target_onehot to an array representation and display the first five rows of it.
+
+Hint: Use toarray method.
+
+import sklearn.datasets as datasets
+
+import sklearn.preprocessing as pre
+
+iris = datasets.load_iris()
+
+iris_target_onehot = iris.target.reshape(-1,1) 
+
+pre.OneHotEncoder(sparse=False).fit_transform(iris_target_onehot)
+
+print(iris_target_onehot[30:80])
+
+---------------------------------------------------------------------------------------------------------------
+4. 
+Import the three modules sklearn.datasets, sklearn.model_selection, and sklearn.neighbors
+Load popular iris data set from sklearn.datasets module and assign it to variable iris.
+Split iris.data into two sets names x_train and x_test. Also, split iris.target into two sets y_train and y_test.
+Hint: Use train_test_split method from sklearn.model_selection; set random_state to 30 and perform stratified sampling.
+
+import sklearn.datasets
+
+import sklearn.model_selection
+
+import sklearn.neighbors
+
+
+iris = sklearn.datasets.load_iris()
+
+X_train, X_test, Y_train, Y_test = sklearn.model_selection.train_test_split(iris.data, iris.target,
+                                   stratify=iris.target,random_state=30)
+------------------------------------------------------------------------------------------------------------------
+5.
+Fit K nearest neighbors model on x_train data, with default parameters. Name the model as knn_clf.
+Evaluate the model accuracy on x_train and x_test sets.
+
+import sklearn.datasets
+
+import sklearn.model_selection
+
+import sklearn.neighbors as neighbors
+
+iris = sklearn.datasets.load_iris()
+
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(iris.data, iris.target,
+                                   stratify=iris.target,random_state=30)
+
+knn_classifier = neighbors.KNeighborsClassifier()   
+
+knn_clf = knn_classifier.fit(x_train, y_train) 
+
+print('Accuracy of Train Data :', knn_clf.score(x_train,y_train))
+
+print('Accuracy of Test Data :', knn_clf.score(x_test,y_test))
+
+------------------------------------------------------------------------------------------------------------------
+6. 
+
+Fit multiple K nearest neighbors models on x_train data with n_neighbors parameter value changing from 3 to 10.
+Evaluate each model accuracy on x_train and x_test sets.
+Hint: Make use of for loop
+
+import sklearn.datasets
+
+import sklearn.model_selection
+
+import sklearn.neighbors as neighbors
+
+iris = sklearn.datasets.load_iris()
+
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(iris.data, iris.target,
+                                   stratify=iris.target,random_state=30)
+                                   
+
+for i in range(3,10):
+    
+	knn_classifier = neighbors.KNeighborsClassifier(n_neighbors=i)   
+    
+	knn_clf = knn_classifier.fit(x_train, y_train) 
+    
+	print('Accuracy of Train Data for :',knn_clf.score(x_train,y_train))
+    
+	print('Accuracy of Test Data :', knn_clf.score(x_test,y_test))
+
+------------------------------------------------------------------------------------------------------------------
+7.
+Import the three modules sklearn.datasets, sklearn.model_selection, and sklearn.tree.
+Load popular Boston dataset from sklearn.datasets module and assign it to variable boston.
+Split boston.data into two sets names x_train and x_test. Also, split boston.target into two sets y_train and y_test.
+Hint: Use train_test_split method from sklearn.model_selection; set random_state to 30.
+
+
+import sklearn.datasets as datasets
+
+import sklearn.model_selection
+
+import sklearn.tree
+
+boston_df = datasets.load_boston()
+
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(boston_df.data,boston_df.target,random_state = 30)
+                                   
+
+
+------------------------------------------------------------------------------------------------------------------
+8.
+
+Build a Decision tree Regressor model from x_train set, with default parameters. Name the model as dt_reg.
+Evaluate the model accuracy on x_train and x_test sets.
+Predict the housing price for first two samples of x_test set.
+
+import sklearn.datasets as datasets
+
+import sklearn.model_selection
+
+import sklearn.tree as tree
+
+boston_df = datasets.load_boston()
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(boston_df.data,boston_df.target,random_state = 30)
+
+dt_reg = tree.DecisionTreeRegressor(max_depth=2)
+dt_reg.fit(x_train,y_train)
+
+y_1 = dt_reg.predict(x_train)
+
+y_2 = dt_reg.predict(x_test)
+
+print(y_2[0:2])
+
+------------------------------------------------------------------------------------------------------------------
+9 .
+
+Fit multiple Decision tree regressors on x_train data with max_depth parameter value changing from 2 to 5.
+Evaluate each model accuracy on x_train and x_test sets.
+
+import sklearn.datasets as datasets
+
+import sklearn.model_selection
+
+import sklearn.tree as tree
+
+boston_df = datasets.load_boston()
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(boston_df.data,boston_df.target,random_state = 30)
+
+for i in range(2,5):
+	dt_reg = tree.DecisionTreeRegressor(max_depth=i)
+	
+dt_reg.fit(x_train,y_train)
+
+	y_1 = dt_reg.predict(x_train)
+
+	y_2 = dt_reg.predict(x_test)
+
+------------------------------------------------------------------------------------------------------------------
+10.
+Import the three modules sklearn.datasets, sklearn.model_selection, and sklearn.ensemble.
+Load popular boston data set from sklearn.datasets module and assign it to variable boston.
+Split boston.data into two sets names x_train and x_test. Also split boston.target into two sets y_train and y_test.
+Hint: Use train_test_split method from sklearn.model_selection; set random_state to 30.
+
+import sklearn.datasets as datasets
+
+import sklearn.model_selection
+ 
+import sklearn.ensemble as es
+
+
+
+boston_df = datasets.load_boston()
+
+
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(boston_df.data,boston_df.target,random_state = 30)
+
+
+          
+
+------------------------------------------------------------------------------------------------------------------
+11.
+
+Build a Random Forest Regressor model from x_train set, with default parameters. Name the model as rf_reg.
+Evaluate the model accuracy on x_train and x_test sets.
+
+import sklearn.datasets as datasets
+
+import sklearn.model_selection
+
+import sklearn.ensemble as es
+
+
+boston_df = datasets.load_boston()
+
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(boston_df.data,boston_df.target,random_state = 30)
+
+rf_reg = es.RandomForestRegressor(max_depth=2, random_state=0)
+rf_reg.fit(x_test, y_test)
+yfit = rf_reg.predict(x_test)
+print(yfit)
+
+yfit = rf_reg.predict(x_test)
+
+print(yfit)
+
+#ytrue = model(xfit, sigma=0)
+
+------------------------------------------------------------------------------------------------------------------
+12.
+
+Build multiple Random forest regressor on x_train data with max_depth parameter value changing from 3 to 5 and also setting n_estimators to one of 50, 100, 200 values.
+
+Evaluate each model accuracy on x_train and x_test sets.
+
+import sklearn.datasets as datasets
+import sklearn.model_selection
+import sklearn.ensemble as es
+boston_df = datasets.load_boston()
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(boston_df.data,boston_df.target,random_state = 30)
+for i in range(3,5):
+    rf_reg = es.RandomForestRegressor(max_depth=2, random_state=0,n_estimators =100)
+    rf_reg.fit(x_test, y_test)
+    ytrfit = rf_reg.predict(x_test)
+    print(ytrfit)
+    ytfit = rf_reg.predict(x_test)
+    print(ytfit)
+
+------------------------------------------------------------------------------------------------------------------
+13. 
+Import the three modules sklearn.datasets, sklearn.model_selection, and sklearn.svm.
+Load popular digits dataset from sklearn.datasets module and assign it to variable digits.
+Split digits.data into two sets names x_train and x_test. Also split digits.target into two sets y_train and y_test.
+
+Hint: Use train_test_split method from sklearn.model_selection; set random_state to 30.
+
+import sklearn.datasets as datasets
+
+import sklearn.model_selection 
+
+import sklearn.svm
+digits = datasets.load_digits()
+
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(digits.data,digits.target,random_state = 30)
+------------------------------------------------------------------------------------------------------------------
+14.
+
+Import the three modules sklearn.datasets, sklearn.model_selection, and sklearn.cluster.
+Load popular iris data set from sklearn.datasets module and assign it to variable iris.
+
+import sklearn.datasets as ds
+
+import sklearn.model_selection 
+
+import sklearn.cluster
+iris = ds.load_iris()
+      
+
+------------------------------------------------------------------------------------------------------------------
+15.
+Cluster x_train set into 3 clusters using K-means with default parameters. Name the model as km_cls.
+Predict the cluster of samples in x_test and determine the homogeneity score of the model.
+
+import sklearn.datasets as ds
+
+import sklearn.model_selection 
+
+import sklearn.cluster
+
+iris = ds.load_iris()
+
+from sklearn.cluster import KMeans
+
+
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(iris.data,iris.target,random_state = 30)
+
+km_cls = KMeans(n_clusters=3)
+
+km_cls = km_cls.fit(x_train) 
+
+print(km_cls.predict(x_test))          
+----------------------------------------------------------------------------------------------------------------
+16.
+Cluster x_train set using Mean shift with default parameters. Name the model as ms_cls.
+Predict the cluster of samples in x_test and determine the homogeneity score of the model.
+
+import sklearn.datasets as ds
+
+import sklearn.model_selection 
+
+import sklearn.cluster
+
+iris = ds.load_iris()
+
+
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(iris.data,iris.target,random_state = 30)
+
+
+ms_cls = sklearn.cluster.MeanShift()
+
+ms_cls = ms_cls.fit(x_train) 
+
+print(ms_cls.predict(x_test))       

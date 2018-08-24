@@ -1,0 +1,41 @@
+1. 
+
+Import the text collection, text6 from nltk.book and determine the following.
+No. of words in text6 and store the result in variable n and print n.
+No. of unique words in text6 and store the result in variable u and print u.
+Determine the word coverage of text6 with obtained n and u. Store the result in variable wc and print wc.
+
+import nltk.book
+from nltk.book import * 
+n = len(text6)
+u = len(set(text6))
+wc = n / u
+print(wc)
+-----------------------------------------------------------------------------------------------------------
+2.
+Filter the number of words ending with ise from the set of unique words of text6. Store the result in variable 
+
+ise_ending_words and print the number of words present in ise_ending_words.
+ise_ending_words =  [word for word in set(text6) if word.endswith('ise') ]
+print(len(ise_ending_words))
+
+-------------------------------------------------------------------------------------------------------------
+3.
+Filter the words containing z from the set of unique words of text6. Store the result in variable contains_z. print the number of words present in contains_z.
+
+contains_z=  [word for word in set(text6) if 'z' in word ]
+print(len(contains_z))
+-------------------------------------------------------------------------------------------------------------
+4.
+Filter the words containing pt from the set of unique words of text6. Store the result in variable contains_pt. print the number of words present in contains_pt.
+
+contains_pt=  [word for word in set(text6) if 'pt' in word ]
+print(len(contains_pt))
+-------------------------------------------------------------------------------------------------------------
+5.
+Filter those words from the complete set oftext6, having first letter in upper case and all other letters in lower case. Store the result in variable title_words. print the number of words present in title_words.
+
+title_words =  [word for word in set(text6) if word.title() == word ]
+print(len(title_words))
+-------------------------------------------------------------------------------------------------------------
+word.istitle()

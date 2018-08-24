@@ -1,0 +1,167 @@
+A. Intro
+1.
+Welcome to the course on NLP Using Python. In this course, you will get to learn the following topics:
+Tokenizing text using functions word_tokenize and sent_tokenize.
+Computing Frequencies with FreqDist and ConditionalFreqDist.
+Generating Bigrams and collocations with bigrams and collocations.
+Stemming word affixes using PorterStemmer and LancasterStemmer.
+Tagging words to their parts of speech using pos_tag.
+--------------------------------------------------------------------------
+2.
+Nothing
+--------------------------------------------------------------------------
+3.
+NLP techniques are capable of processing and extracting meaningful insights, from huge unstructured data available online.
+It can automate translating text from one language to other.
+These techniques can be used for performing sentiment analysis.
+It helps in building applications that interact with humans as humans do.
+Also, NLP can help in automating Text Classification, Spam Filtering, and more.
+--------------------------------------------------------------------------
+4.
+nltk is a popular Python framework used for developing Python programs to work with human language data.
+Key features of nltk:
+
+It provides access to over 50 text corpora and other lexical resources.
+It is a suite of text processing tools.
+It is free to use and Open source.
+It is available for Windows, Mac OS X, and Linux.
+--------------------------------------------------------------------------
+5.
+Nothing spl
+--------------------------------------------------------------------------
+6.
+Now let's understand by performing simple tasks in the next couple of slides.
+
+Splitting a sample text into a list of sentences.
+import nltk
+text = "Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991."
+sentences = nltk.sent_tokenize(text)
+len(sentences) - 2
+As seen above, sent_tokenize function generates sentences from the given text.
+--------------------------------------------------------------------------
+7.
+Splitting a sample text into words using word_tokenizer function.
+words = nltk.word_tokenize(text)
+len(words) - 22
+words[:5] -  ['Python', 'is', 'an', 'interpreted', 'high-level']
+The expression words[:5] displays first five words of list words.
+--------------------------------------------------------------------------
+8.
+Determining the frequency of words present in sample text using FreqDist function.
+wordfreq = nltk.FreqDist(words)
+wordfreq.most_common(2)  - [('programming', 2), ('.', 2)]
+The expression wordfreq.most_common(2) displays two highly frequent words with their respective frequency count.
+--------------------------------------------------------------------------
+9.
+In this course, you will be coordinating with several texts curated by NLTK authors.
+These texts are available in collection book of nltk.
+They can be downloaded by running the following command in Python interpreter, after importing nltk successfully.
+import nltk
+nltk.download('book')
+--------------------------------------------------------------------------
+10.
+Nothing
+--------------------------------------------------------------------------
+11.
+Searching Text:
+There are multiple ways of searching for a pattern in a text.
+The example shown below searches for words starting with tri, and ending with r.
+text1.findall("<tri.*r>")
+triangular; triangular; triangular; triangular
+-------------------------------------------------------------------------------------------------------------------
+B. 
+1.
+In this topic, you will understand how to perform the following activities, using text1 as input text.
+Total Word Count
+Unique Word Count
+Transforming Words
+Word Coverage
+Filtering Words
+Frequency Distribution
+--------------------------------------------------------------------------
+2.
+Determining Total Word Count
+
+The text1, imported from nltk.book is an object of nltk.text.Text class.
+from nltk.book import *
+type(text1)
+<class 'nltk.text.Text'>
+Total number of words in text1 is determined using len.
+n_words = len(text1)
+n_words - 260819
+--------------------------------------------------------------------------
+3.
+Determining Unique Word Count
+
+A unique number of words in text1 is determined using set and len methods.
+n_unique_words = len(set(text1))
+n_unique_words - 19317
+set(text1) generates list of unique words from text1.
+--------------------------------------------------------------------------
+4.
+
+Transforming Words
+
+It is possible to apply a function to any number of words and transform them.
+Now let's transform every word of text1 to lowercase and determine unique words once again.
+
+text1_lcw = [ word.lower() for word in set(text1) ]
+n_unique_words_lc = len(set(text1_lcw))
+n_unique_words_lc - 17231
+
+A difference of 2086 can be found from n_unique_words.
+--------------------------------------------------------------------------
+5.
+Determining Word Coverage
+
+Word Coverage: Word Coverage refers to an average number of times a word is occurring in the text.
+
+The following examples determine Word Coverage of raw and transformed text1.
+word_coverage1 = n_words / n_unique_words
+word_coverage1 - 13.502044830977896
+On average, a single word in text1 is repeated 13.5 times.
+word_coverage2 = n_words / n_unique_words_lc
+word_coverage2 - 15.136614241773549
+--------------------------------------------------------------------------
+6.
+Filtering Words
+
+Now let's see how to filter words based on specific criteria.
+The following example filters words having characters more than 17.
+
+big_words = [word for word in set(text1) if len(word) > 17 ]
+big_words - ['uninterpenetratingly', 'characteristically']
+A list of comprehension with a condition is used above.
+--------------------------------------------------------------------------
+7.
+Filtering Words - cont...
+
+Now let's see one more example which filters words having the prefix Sun.
+sun_words = [word for word in set(text1) if word.startswith('Sun') ]
+sun_words - ['Sunday', 'Sunset', 'Sunda']
+The above example is case-sensitive. It doesn't filter the words starting with lowercase s and followed by un.
+--------------------------------------------------------------------------
+8.
+Frequency Distribution
+
+FreqDist functionality of nltk can be used to determine the frequency of all words, present in an input text.
+
+The following example, determines frequency distribution of text1 and further displays the frequency of word Sunday.
+
+text1_freq = nltk.FreqDist(text1)
+text1_freq['Sunday']  - 7
+--------------------------------------------------------------------------
+9.
+image
+--------------------------------------------------------------------------
+10.
+Frequency Distribution
+
+Now let's identify three frequent words from text1_freq distribution using most_common method.
+top3_text1 = text1_freq.most_common(3)
+top3_text1 - [(',', 18713), ('the', 13721), ('.', 6862)]
+The output says the three most frequent words are , , the, and .
+--------------------------------------------------------------------------
+11.
+
+--------------------------------------------------------------------------
