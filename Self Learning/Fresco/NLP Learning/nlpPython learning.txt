@@ -164,4 +164,105 @@ The output says the three most frequent words are , , the, and .
 --------------------------------------------------------------------------
 11.
 
---------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------
+B.
+1. Conditional Frequency:
+
+In the previous topic, you have studied about Frequency Distributions.
+FreqDist function computes the frequency of each item in a list.
+While computing a frequency distribution, you observe occurrence count of an event.
+
+items = ['apple', 'apple', 'kiwi', 'cabbage', 'cabbage', 'potato']
+nltk.FreqDist(items)
+FreqDist({'apple': 2, 'cabbage': 2, 'kiwi': 1, 'potato': 1})
+----------------------------------------------------------------------------
+2.
+A Conditional Frequency is a collection of frequency distributions, computed based on a condition.
+For computing a conditional frequency, you have to attach a condition to every occurrence of an event.
+Let's consider the following list for computing Conditional Frequency.
+
+c_items = [('F','apple'), ('F','apple'), ('F','kiwi'), ('V','cabbage'), ('V','cabbage'), ('V','potato') ]
+
+Each item is grouped either as a fruit F or a vegetable V
+----------------------------------------------------------------------------
+3.
+Computing Conditional Frequency
+ConditionalFreqDist function of nltk is used to compute Conditional Frequency Distribution (CDF).
+
+The same can be viewed in the following example.
+
+cfd = nltk.ConditionalFreqDist(c_items)
+cfd.conditions()
+['V', 'F']
+cfd['V']
+FreqDist({'cabbage': 2, 'potato': 1})
+cfd['F']
+FreqDist({'apple': 2, 'kiwi': 1})
+-----------------------------------------------------------------------------
+4.
+Counting Words by Genre
+Now let's determine the frequency of words, of a particular genre, in brown corpus.
+cfd = nltk.ConditionalFreqDist([ 
+(genre, word) 
+
+for genre in brown.categories() 
+for word in brown.words(categories=genre) ])
+
+The conditions applied can be viewed as shown below.
+cfd.conditions()
+['adventure', 'hobbies', ...]
+-------------------------------------------------------------------------------
+5.
+Viewing Word Count
+
+Once after computing conditional frequency distribution, tabulate method is used for viewing the count along with arguments conditions and samples.
+cfd.tabulate(conditions=['government', 'humor', 'reviews'], samples=['leadership', 'worship', 'hardship'])
+
+           leadership  worship  hardship 
+government         12        3         2 
+     humor          1        0         0 
+   reviews         14        1         2 
+-------------------------------------------------------------------------------
+Viewing Cumulative Word Count
+The cumulative count for different conditions is found by setting cumulative argument value to True.
+cfd.tabulate(conditions=['government', 'humor', 'reviews'], samples=['leadership', 'worship', 'hardship'], cumulative = True)
+
+           leadership   worship  hardship 
+government         12       15        17 
+     humor          1        1         1 
+   reviews         14       15        17 
+---------------------------------------------------------------------------------
+Accessing Individual Frequency Distributions
+From the obtained conditional frequency distribution, you can access individual frequency distributions.
+
+The below example extracts frequency distribution of words present in news genre of brown corpus.
+
+news_fd = cfd['news']
+news_fd.most_common(3)
+[('the', 5580), (',', 5188), ('.', 4030)]
+You can further access count of any sample as shown below.
+news_fd['the']
+5580
+---------------------------------------------------------------------------------
+Comparing Frequency Distributions
+Now let's see another example, which computes the frequency of last character appearing in all names associated with males and females respectively and compares them.
+
+The text corpus names contain two files male.txt and female.txt
+--------------------------------------------------------------------------------
+Comparing Frequency Distributions
+from nltk.corpus import names
+nt = [(fid.split('.')[0], name[-1])    for fid in names.fileids() 
+  for name in names.words(fid) ]
+ cfd2 = nltk.ConditionalFreqDist(nt)
+cfd2['female'] > cfd2['male']
+True
+The expression cfd2['female'] > cfd2['male'] checks if the last characters in females occur more frequently than the last characters in males.
+--------------------------------------------------------------------------------
+Comparing Frequency Distributions
+The following code snippet displays frequency count of characters a and e in females and males, respectively.
+>>> cfd2.tabulate(samples=['a', 'e'])
+          a    e 
+female 1773 1432 
+  male   29  468 
+You can observe a significant difference in frequencies of a and e.
+---------------------------------------------------------------------------------
