@@ -1,4 +1,4 @@
-A. Intro
+rA. Intro
 1.
 Welcome to the course on NLP Using Python. In this course, you will get to learn the following topics:
 Tokenizing text using functions word_tokenize and sent_tokenize.
@@ -266,3 +266,229 @@ female 1773 1432
   male   29  468 
 You can observe a significant difference in frequencies of a and e.
 ---------------------------------------------------------------------------------
+STEMMING
+Stemming is a process of stripping affixes from words.
+
+Stemming
+More often, you normalize text by converting all the words into lowercase. This will treat both words The and the as same.
+With stemming, the words playing, played and play will be treated as single word, i.e. play.
+
+
+nltk comes with few stemmers.
+The two widely used stemmers are Porter and Lancaster stemmers.
+These stemmers have their own rules for string affixes.
+The following example demonstrates stemming of word builders using PorterStemmer.
+
+from nltk import PorterStemmer
+porter = nltk.PorterStemmer()
+porter.stem('builders')
+builder
+-------------------------------------------------------------------------------------------------------
+Stemmers in nltk
+Now let's see how to use LancasterStemmer and stem the word builders.
+>>> from nltk import LancasterStemmer
+>>> lancaster = LancasterStemmer()
+>>> lancaster.stem('builders')
+build
+Lancaster Stemmer returns build whereas Porter Stemmer returns builder.
+-------------------------------------------------------------------------------------------------------
+Normalizing with Stemming
+Let's consider the text collection, text1.
+
+Let's first determine the number of unique words present in original text1.
+
+Then normalize the text by converting all the words into lower case and again determine the number of unique words.
+
+>>> from nltk.book import *
+>>> len(set(text1))
+19317
+>>> lc_words = [ word.lower() for word in text1] 
+>>> len(set(lc_words))
+17231
+
+-------------------------------------------------------------------------------------------------------------------------
+Normalizing with Stemming
+Now let's further normalize text1 with Porter Stemmer.
+>>> from nltk import PorterStemmer
+>>> porter = PorterStemmer()
+>>> p_stem_words = [porter.stem(word) for word in set(lc_words) ]
+>>> len(set(p_stem_words))
+10927
+The above output shows that, after normalising with Porter Stemmer, the text1 collection has 10927 unique words.
+----------------------------------------------------------------------------------------------------------------------------
+Normalising with Stemming
+Now let's normalise with Lancaster stemmer and determine the unique words of text1.
+>>> from nltk import LancasterStemmer
+>>> lancaster = LancasterStemmer()
+>>> l_stem_words = [lancaster.stem(word) for word in set(lc_words) ]
+>>> len(set(l_stem_words))
+9036
+Applying Lancaster Stemmer to text1 collection resulted in 9036 words.
+-------------------------------------------------------------------------------------------------------------------------
+Understanding Lemma
+Lemma is a lexical entry in a lexical resource such as word dictionary.
+
+You can find multiple Lemma's with the same spelling. These are known as homonyms.
+
+For example, consider the two Lemma's listed below, which are homonyms.
+
+1. saw [verb] - Past tense of see
+2. saw [noun] - Cutting instrument
+-----------------------------------------------------------------------------------------------------------------------------
+Lemmatization
+nltk comes with WordNetLemmatizer. This lemmatizer removes affixes only if the resulting word is found in lexical resource, Wordnet.
+>>> wnl = nltk.WordNetLemmatizer()
+>>> wnl_stem_words = [wnl.lemmatize(word) for word in set(lc_words) ]
+>>> len(set(wnl_stem_words))
+15168 
+WordNetLemmatizer is majorly used to build a vocabulary of words, which are valid Lemmas.
+-----------------------------------------------------------------------------------------------------------------------------------
+Lemmatization
+nltk comes with WordNetLemmatizer. This lemmatizer removes affixes only if the resulting word is found in lexical resource, Wordnet.
+>>> wnl = nltk.WordNetLemmatizer()
+>>> wnl_stem_words = [wnl.lemmatize(word) for word in set(lc_words) ]
+>>> len(set(wnl_stem_words))
+15168 
+WordNetLemmatizer is majorly used to build a vocabulary of words, which are valid Lemmas.
+------------------------------------------------------------------------------------------------------------------------------------
+POS Tagging
+The method of categorizing words into their parts of speech and then labeling them respectively is called POS Tagging.
+
+POS Tagger
+A POS Tagger processes a sequence of words and tags a part of speech to each word.
+
+pos_tag is the simplest tagger available in nltk.
+
+The below example shows usage of pos_tag.
+
+>>> import nltk
+>>> text = 'Python is awesome.'
+>>> words = nltk.word_tokenize(text)
+>>> nltk.pos_tag(words)
+[('Python', 'NNP'), 
+ ('is', 'VBZ'),
+ ('awesome', 'JJ'),
+ ('.', '.')]
+------------------------------------------------------------------------------------------------------------------------------------
+POS_Tagger
+The words Python, is and awesome are tagged to Proper Noun (NNP), Present Tense Verb (VB), and adjective (JJ) respectively.
+
+You can read more about the pos tags with the below help command
+
+>>> nltk.help.upenn_tagset()
+To know about a specific tag like JJ, use the below-shown expression
+>>> nltk.help.upenn_tagset('JJ')
+JJ: adjective or numeral, ordinal
+------------------------------------------------------------------------------------------------------------------------------------------
+Tagging Text
+Constructing a list of tagged words from a string is possible.
+
+A tagged word or token is represented in a tuple, having the word and the tag.
+
+In the input text, each word and tag are separated by /.
+
+>>> text = 'Python/NN is/VB awesome/JJ ./.'
+>>> [ nltk.tag.str2tuple(word) for word in text.split() ]
+[('Python', 'NN'),
+ ('is', 'VB'),
+ ('awesome', 'JJ'),
+ ('.', '.')]
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Tagged Corpora
+Many of the text corpus available in nltk, are already tagged to their respective parts of speech.
+
+tagged_words method can be used to obtain tagged words of a corpus.
+
+The following example fetches tagged words of brown corpus and displays few.
+
+>>> from nltk.corpus import brown
+>>> brown_tagged = brown.tagged_words(
+>>> brown_tagged[:3]
+[('The', 'AT'),
+ ('Fulton', 'NP-TL'),
+ ('County', 'NN-TL')]
+------------------------------------------------------------------------------------------------------------------------
+DefaultTagger
+DefaultTagger assigns a specified tag to every word or token of given text.
+
+An example of tagging NN tag to all words of a sentence, is shown below.
+
+>>> import nltk
+>>> text = 'Python is awesome.'
+>>> words = nltk.word_tokenize(text)
+>>> default_tagger = nltk.DefaultTagger('NN')
+>>> default_tagger.tag(words)
+[('Python', 'NN'),
+ ('is', 'NN'),
+ ('awesome', 'NN'),
+ ('.', 'NN')]
+--------------------------------------------------------------------------------------------------------------------------
+Lookup Tagger
+You can define a custom tagger and use it to tag words present in any text.
+
+The below-shown example defines a dictionary defined_tags, with three words and their respective tags.
+
+>>> import nltk
+>>> text = 'Python is awesome.'
+>>> words = nltk.word_tokenize(text)
+>>> defined_tags = {'is':'BEZ', 'over':'IN', 'who': 'WPS'}
+----------------------------------------------------------------------------------------------------------------------------
+Lookup Tagger
+The example further defines a UnigramTagger with the defined dictionary and uses it to predict tags of words in text.
+>>> baseline_tagger = nltk.UnigramTagger(model=defined_tags)
+>>> baseline_tagger.tag(words)
+[('Python', None),
+ ('is', 'BEZ'),
+ ('awesome', None),
+ ('.', None)]
+Since the words Python and awesome are not found in defined_tags dictionary, they are tagged to None.
+--------------------------------------------------------------------------------------------------------------------------
+Unigram Tagger
+UnigramTagger provides you the flexibility to create your taggers.
+
+Unigram taggers are built based on statistical information. i.e., they tag each word or token to most likely tag for that particular word.
+
+You can build a unigram tagger through a process known as training.
+
+Then use the tagger to tag words in a test set and evaluate the performance.
+----------------------------------------------------------------------------------------------------
+Unigram Tagger
+Let's consider the tagged sentences of brown corpus collections, associated with government genre.
+
+Let's also compute the training set size, i.e., 80%.
+
+>>> from nltk.corpus import brown
+>>> brown_tagged_sents = brown.tagged_sents(categories='government')
+>>> brown_sents = brown.sents(categories='government')
+>>> len(brown_sents)
+3032
+>>> train_size = int(len(brown_sents)*0.8)
+>>> train_size
+2425
+---------------------------------------------------------------------------------------------------------
+
+Unigram Tagger
+>>> train_sents = brown_tagged_sents[:train_size]
+>>> test_sents = brown_tagged_sents[train_size:]
+>>> unigram_tagger = nltk.UnigramTagger(train_sents)
+>>> unigram_tagger.evaluate(test_sents)
+0.7804399607678296
+unigram_tagger is built by passing trained tagged sentences as argument to UnigramTagger.
+
+The built unigram_tagger is further evaluated with test sentences.
+-----------------------------------------------------------------------------------------------------------
+Unigram Tagger
+The following code snippet shows tagging words of a sentence, taken from the test set.
+>>> unigram_tagger.tag(brown_sents[3000])
+[('The', 'AT'),
+ ('first', 'OD'),
+ ('step', 'NN'),
+ ('is', 'BEZ'),
+ ('a', 'AT'),
+ ('comprehensive', 'JJ'),
+ ('self', None),
+ ('study', 'NN'),
+ ....
+ ('.', '.')]
+---------------------------------------------------------------------------------------------------------------

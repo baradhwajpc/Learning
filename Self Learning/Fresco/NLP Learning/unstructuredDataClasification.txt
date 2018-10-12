@@ -1,0 +1,284 @@
+nA.
+Why this course?
+This course gives you a practical experience for solving unstructured text classification problems. If you're wondering why you need unstructured text,
+
+"80% of business relevant information originates in the unstructured form, primarily text ", says Seth Grimes, a leading analytics strategy consultant.
+------------------------------------------------------------------------------------------------------------
+What Would you Need to Follow Along?
+Have a basic understanding of machine learning concepts.
+
+Try out the code snippets given for the case study.
+Refer the links to gain an in-depth understanding of other machine learning techniques.
+
+"Programming is usually taught by examples" -Niklaus Wirth
+------------------------------------------------------------------------------------------------------------
+Unstructured data, as the name suggests, does not have a structured format and may contain data such as dates, numbers or facts.
+
+*This results in irregularities and ambiguities which make it difficult to understand using traditional programs when compared to data stored in fielded form in databases or annotated (semantically tagged) in documents.
+Source : Wikipedia.
+A few examples of unstructured data are:
+
+Emails
+Word Processing Files
+PDF files
+Spreadsheets
+Digital Images
+Video
+Audio
+Social Media Posts etc.
+------------------------------------------------------------------------------------------------------------
+
+Let us understand unstructured data classification through the following case study:
+
+SMS Spam Detection:
+
+In our day-to-day lives, we receive a large number of spam/junk messages either in the form of Text(SMS) or E-mails. It is important to filter these spam messages since they are not truthful or trustworthy.
+
+In this case study, we apply various machine learning algorithms to categorize the messages depending on whether they are spam or not.
+--------------------------------------------------------------------------------------------------------------
+Why Feature Extraction is important?
+To perform machine learning on text documents, you first need to turn the text content into numerical feature vectors.
+
+In Python, you have a few packages defined under sklearn.
+
+We will be looking into a few specific ones used for unstructured data.
+
+Bag of Words (BOW) is one of the most widely used methods for generating features in Natural Language Processing.
+Representing/Transforming a text into a bag of words helps to identify various measures to characterize the text.
+
+Predominantly used for calculating the term(word) frequency or the number of times a term occurs in a document/sentence.
+--------------------------------------------------------------------------------------------------------------
+The Term Document Matrix (TDM) is a matrix that contains the frequency of occurrence of terms in a collection of documents.
+In a TDM, the rows represent documents and columns represent the terms.
+It can be used as a feature for training the classifier
+--------------------------------------------------------------------------------------------------------------
+
+Classification Algorithms
+
+There are various algorithms to solve the classification problems. The code to try out a few of these algorithms will be presented in the upcoming cards.
+
+We will discuss the following :
+Decision Tree Classifier
+Stochastic Gradient Descent Classifier
+Support Vector Machine Classifier
+Random Forest Classifier
+
+Note:- The explanation for these algorithms are given in the Machine Learning Axioms course. Refer the course for further details.
+--------------------------------------------------------------------------------------------------------------
+The following are the steps involved in building a classification model:
+
+Initialize the classifier to be used.
+
+Train the classifier - All classifiers in scikit-learn uses a fit(X, y) method to fit the model(training) for the given train data X and train label y.
+
+Predict the target - Given an unlabeled observation X, the predict(X) returns the predicted label y.
+
+Evaluate the classifier model - The score(X,y) returns the score for the given test data X and test label y.
+--------------------------------------------------------------------------------------------------------------
+Train and Test Data
+
+The code snippet provided here is for partitioning the data into train and test for building the classifier model. This split will be used to explain classification algorithms.
+
+
+from sklearn.cross_validation import train_test_split#Splitting the data for training and testing
+
+train_data,test_data, train_label, test_label = train_test_split(message_data_TDM, Training_label, test_size=.1)
+--------------------------------------------------------------------------------------------------------------
+Train and Test Data
+The code snippet provided here is for partitioning the data into train and test for building the classifier model. This split will be used to explain classification algorithms.
+
+from sklearn.cross_validation import train_test_split#Splitting the data for training and testing
+train_data,test_data, train_label, test_label = train_test_split(message_data_TDM, Training_label, test_size=.1)
+--------------------------------------------------------------------------------------------------------------
+Decision Tree:
+It is one of the commonly used classification techniques for performing binary as well as multi-class classification.
+The decision tree model predicts the class/target by learning simple decision rules from the features of the data.
+
+
+from sklearn.tree import DecisionTreeClassifier#Creating a decision classifier model
+classifier=DecisionTreeClassifier() #Model training
+classifier = classifier.fit(train_data, train_label) #After being fitted, the model can then be used to predict the output.
+message_predicted_target = classifier.predict(test_data)
+score = classifier.score(test_data, test_label)
+print('Decision Tree Classifier : ',score)
+--------------------------------------------------------------------------------------------------------------
+SGD Classifier:
+It is used for large scale learning
+
+It supports different loss functions & penalties for classification
+
+seed=7
+from sklearn.linear_model import SGDClassifier
+classifier =  SGDClassifier(loss='modified_huber', shuffle=True,random_state=seed)
+classifier = classifier.fit(train_data, train_label)
+score = classifier.score(test_data, test_label)
+print('SGD classifier : ',score)
+--------------------------------------------------------------------------------------------------------------
+SVM
+Support Vector Machine(SVM) is effective in high-dimensional spaces.
+It is effective in cases where the number of dimensions is greater than the number of samples.
+It works well with a clear margin of separation.
+
+from sklearn.svm import SVC
+classifier = SVC(kernel="linear", C=0.025,random_state=seed)
+classifier = classifier.fit(train_data, train_label)
+score = classifier.score(test_data, test_label)
+print('SVM Classifier : ',score)
+--------------------------------------------------------------------------------------------------------------
+Random Forest Classifier
+Controls over fitting
+Here, a random forest fits a number of decision tree classifiers on various sub-samples of the dataset and uses averaging to improve the predictive accuracy.
+
+from sklearn.ensemble import RandomForestClassifier
+classifier = RandomForestClassifier(max_depth=5, n_estimators=10, max_features=10,random_state=seed)
+classifier = classifier.fit(train_data, train_label)
+score = classifier.score(test_data, test_label)
+print('Random Forest Classifier : ',score)
+--------------------------------------------------------------------------------------------------------------
+Model Tuning
+The classification algorithms in machine learning are parameterized. Modifying any of those parameters can influence the results. So algorithm/model tuning is essential to find out the best model.
+
+For example, let's take the Random Forest Classifier and change the values of a few parameters (n_ estimators,max_ features)
+
+
+from sklearn.ensemble import RandomForestClassifier
+classifier = RandomForestClassifier(max_depth=5, n_estimators=15, max_features=60,random_state=seed)
+classifier = classifier.fit(train_data, train_label)
+score=classifier.score(test_data, test_label)
+print('Random Forest classification after model tuning',score)
+Refer scikit-learn tutorials and try to change the parameters of other classifiers and analyze the results
+
+------------------------------------------------------------------------------------------------------------------------------------
+Partitioning the Data
+It is a methodological mistake to test and train on the same dataset. This is because the classifier would fail to predict correctly for any unseen data. This could result in overfitting.
+
+To avoid this problem,
+Split the data to train set, validation set and test set.
+Training Set: The data used to train the classifier.
+Validation Set: The data used to tune the classifier model parameters i.e., to understand how well the model has been trained (a part of training data).
+Testing Set: The data used to evaluate the performance of the classifier (unseen data by the classifier).
+
+This will help you know the efficiency of your model.
+-----------------------------------------------------------------
+Cross Validation
+Cross validation is a model validation technique to evaluate the performance of a model on unseen data (validation set).
+
+It is a better estimate to evaluate testing accuracy than training accuracy on unseen data.
+Points to remember:
+Cross validation gives high variance if the testing set and training set are not drawn from same population.
+Allowing training data to be included in testing data will not give actual performance results.
+In cross validation, the number of samples used for training the model is reduced and the results depend on the choice of the pair of training and testing sets.
+You can refer to the various CV approaches here.
+----------------------------------------------------------------------------
+Stratified Shuffle Split
+The StratifiedShuffleSplit splits the data by taking an equal number of samples from each class in a random manner.
+
+StratifiedShuffleSplit would suit our case study as the dataset has a class imbalance which can be seen from the following code snippet:
+
+
+seed=7
+
+from sklearn.cross_validation import StratifiedShuffleSplit
+
+#creating cross validation object with 10% test size 
+
+cross_val = StratifiedShuffleSplit(Training_label,1, test_size=0.1,random_state=seed)
+
+test_size=0.1 denotes that 10 % of the dataset is used for testing.
+--------------------------------------------------------------------------------------------------------
+Stratified Shuffle Split Contd...
+This selection is then used to split the data into test and train sets.
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn import svm
+classifiers = [
+    DecisionTreeClassifier(),
+    SGDClassifier(loss='modified_huber', shuffle=True),
+    SVC(kernel="linear", C=0.025),
+    KNeighborsClassifier(),
+    OneVsRestClassifier(svm.LinearSVC()),
+    RandomForestClassifier(max_depth=5, n_estimators=10, max_features=10),
+   ]
+
+for clf in classifiers:
+    score=0
+    for train_index, test_index in cross_val:
+        X_train, X_test = message_data_TDM [train_index], message_data_TDM [test_index]
+        y_train, y_test = Training_label[train_index], Training_label[test_index]
+        clf.fit(X_train, y_train)
+        score=score+clf.score(X_test, y_test)
+    print(score)
+
+The above code uses ensemble of classifiers for cross validation. It helps to select the best classifier based on the cross validation scores. The classifier with the highest score can be used for building the classification model.
+
+Note: You may add or remove classifiers based on the requirement.
+-------------------------------------------------------------------------------------------------------------
+Classification Accuracy
+The classification accuracy is defined as the percentage of correct predictions.
+
+from sklearn.metrics import accuracy_score
+
+print('Accuracy Score',accuracy_score(test_label,message_predicted_target))  
+
+classifier = classifier.fit(train_data, train_label)
+
+score=classifier.score(test_data, test_label)
+
+test_label.value_counts()
+
+This simple classification accuracy will not tell us the types of errors by our classifier.
+
+It is just an easier method, but it will not give us the latent distribution of response values.
+----------------------------------------------------------------------------------------------------------
+Confusion Matrix
+It is a technique to evaluate the performance of a classifier.
+
+It depicts the performance in a tabular form that has 2 dimensions namely “actual” and “predicted” sets of data.
+
+The rows and columns of the table show the count of false positives, false negatives, true positives and true negatives.
+
+
+from sklearn.metrics import confusion_matrix
+
+print('Confusion Matrix',confusion_matrix(test_label,message_predicted_target))
+
+The first parameter shows true values and the second parameter shows predicted values.
+
+-----------------------------------------------------------------------------------------------------------
+
+This image is a confusion matrix for a two class classifier.
+
+In the table,
+
+TP (True Positive) - The number of correct predictions that the occurrence is positive
+
+FP (False Positive) - The number of incorrect predictions that the occurrence is positive
+
+FN (False Negative) - The number of incorrect predictions that the occurrence is negative
+
+TN (True Negative)- The number of correct predictions that the occurrence is negative
+
+TOTAL - The total number of occurrences
+-----------------------------------------------------------------------------------------------------
+To evaluate the quality of output, it is always better to plot and analyze the results.
+
+For our case study, we have plotted the confusion matrix of Decision Tree Classifier which is given in the above image.
+
+The function for plotting confusion matrix is given here.
+-------------------------------------------------------------------------------------------------------
+Classification Report
+The classification_report function shows a text report with the commonly used classification metrics.
+from sklearn.metrics import classification_report
+target_names = ['spam', 'ham']
+print(classification_report(test_label, message_predicted_target, target_names=target_names))
+
+Precision
+
+When a positive value is predicted, how often is the prediction correct?
+Recall
+
+It is the true positive rate.
+When the value is positive, how often does the prediction turn out to be correct?
+To know more about model evaluation, 
+-------------------------------------------------------------------------------------------------
