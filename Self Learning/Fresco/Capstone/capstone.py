@@ -23,7 +23,7 @@ stop_words.update(morewords)
 
 new_words = []
         
-    def extract_tokens(text, target):
+def extract_tokens(text, target):
         """returns array of tuples where each tuple is defined by (tokenized_text, label)
          parameters:
                 text: array of texts
@@ -46,23 +46,25 @@ new_words = []
             tokenarray.append(dataTuple)
             i=i+1
         return tokenarray
-extract_tokens(messages,[0,1])    
+tokenArray = extract_tokens(messages,[0,1])    
     
-    def get_features(self, corpus):
+def get_features(corpus):
         """ 
         returns a Set of unique words in complete corpus. 
         parameters:- corpus: tokenized corpus along with target labels
         
         Return Type is a set
         """
-        unique_word_list = []
+        uniqueWords = []
         for tokens, labels in corpus:
             for item in tokens:
-                if item not in unique_word_list:
-                    unique_word_list.append(item)
-        return unique_word_list
-    
-    def extract_features(self, document):
+                if item not in uniqueWords:
+                    uniqueWords.append(item)
+        return set(unique_word_list)
+wordList =  get_features(tokenArray)
+
+from nltk.tokenize import word_tokenize # or use some other tokenizer
+def extract_features(document):
         """
         maps each input text into feature vector
         parameters:- document: string
@@ -71,7 +73,14 @@ extract_tokens(messages,[0,1])
                       The values correspond to True or False
         """
         
-
+        #all_words = set(word.lower() for passage in document for word in word_tokenize(passage[0]))
+        #dictWords = [({word: (word in word_tokenize(x[0])) for word in all_words}, x[1]) for x in document]
+                      
+        for word in document:
+            
+            
+        return dictWords     
+dictWords = extract_features(wordList)
     def train(self, text, labels):
         """
         Returns trained model and set of unique words in training data
