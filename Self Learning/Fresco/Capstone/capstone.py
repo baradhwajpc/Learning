@@ -21,20 +21,21 @@ from nltk.corpus import stopwords
 from nltk import word_tokenize, WordNetLemmatizer
 from sklearn.model_selection import train_test_split
 
+from nltk.classify.util import apply_features,accuracy
+from nltk import NaiveBayesClassifier
+import pandas as pd
+import pickle
+
+
 #Data Loading
 os.getcwd()
 os.chdir("G:\\Python\\Learning\\Self Learning\\Fresco\\Capstone")
 rawdata = pd.read_csv("emails.csv",header=0)
 
 messages = rawdata['text']
-stop_words = set(stopwords.words('english'))
-morewords = ['Subject:']
-stop_words.update(morewords)
+stop_words_eng = set(stopwords.words('english'))
+stop_words_fr = set(stopwords.words('french'))
 
-from nltk.classify.util import apply_features,accuracy
-from nltk import NaiveBayesClassifier
-import pandas as pd
-import pickle
 
 
 class SpamClassifier:
@@ -49,23 +50,19 @@ class SpamClassifier:
         NOTE: consider only those words which have all alphabets and atleast 3 characters.
         """
         tokenarray = []
-        print(len(text))
-        i=0
-        stop_words = set(stopwords.words('english'))
-        morewords = ['Subject']
-        stop_words.update(morewords)
+        stop_words_eng = set(stopwords.words('english'))
+        stop_words_fr = set(stopwords.words('french'))
+        text =[0,1]
+        #Subject
         for t in text:
             for res in target:
-                tokens = nltk.word_tokenize(t) # tokenize the text'
-                tokens = list(filter(lambda x: x.lower() not in stop_words and len(x) >=3, tokens))
-                #tokens = [w.lower() for w in tokens if len(w) >=3]
+                tokens = nltk.word_tokenize(t)
+                tokens = list(filter(lambda x: x.lower() not in stop_words_eng and x.lower() not in stop_words_fr and x.lower()!= 'Subject' and len(x) >=3, tokens))
                 tokens = [w for w in tokens if re.search('[a-zA-Z]', w)]
                 dataTuple = (tokens,res)
             tokenarray.append(dataTuple)
-            i=i+1
         return tokenarray
-        
-    
+
     def get_features(self, corpus):
         """
         returns a Set of unique words in complete corpus.
@@ -114,6 +111,7 @@ class SpamClassifier:
         #accuracyPercent = nltk.classify.accuracy(self.classifier, text)*100
         #predictedData = self.classifier.classify(text)
         #return predictedData,accuracyPercent
+        
         testTokens = []
         testTokens = self.extract_tokens(text, [0,1])
         result = self.get_features(testTokens)

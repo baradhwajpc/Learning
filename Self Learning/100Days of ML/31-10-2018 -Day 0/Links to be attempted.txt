@@ -1,0 +1,6 @@
+Day - 1: https://www.kaggle.com/pavanraj159/forbes-100-highest-paid-athletes-2018/notebook
+Day - 2: https://www.kaggle.com/pavanraj159/european-football-data-analysis
+Day - 3: https://www.kaggle.com/pavanraj159/costa-rican-poverty
+Day - 4: https://www.kaggle.com/pavanraj159/predicting-compressive-strength-of-concrete
+Day - 5: https://www.kaggle.com/pavanraj159/loan-repayers-v-s-loan-defaulters-home-credit
+Day - 6: https://www.kaggle.com/pavanraj159/nyc-taxi-fare-time-series-forecasting
