@@ -31,12 +31,12 @@ os.chdir("G:\\Python\\Learning\\Self Learning\\Fresco\\Capstone")
 data = pd.read_csv("emails.csv",header=0,usecols=["text","spam"])
 type(data['text'][0])
 type(data['spam'][0])
-data['spam'] = pd.to_numeric(data['spam'], errors='coerce')
 
-data = data[np.isfinite(data['spam'])]
-data['spam'] = data['spam'].astype(int)
+data['spam'] = pd.to_numeric(data['spam'], errors='coerce')
+data = data.dropna()
 type(data['text'][0])
 type(data['spam'][0])
+data['spam'] = data['spam'].astype(int)
 # end of dataloading and cleanup
 
 class SpamClassifier:
@@ -124,7 +124,7 @@ def predict(self, text):
 if __name__ == '__main__':    
     train_X, test_X, train_Y, test_Y = train_test_split(data["text"].values,
                                                             data["spam"].values,
-                                                            test_size = 0.25,
+                                                            test_size = 0.98,
                                                             random_state = 50,
                                                             shuffle = True,
                                                             stratify=data["spam"].values)
@@ -132,6 +132,7 @@ if __name__ == '__main__':
     # train Method
     #Call : #classifier_model, model_word_features = classifier.train(train_X, train_Y)
     extractTokens = []
+    uniqueWords =[]
     # Call : extractTokens = self.extract_tokens(train_X, train_Y) #(text, labels)
         text = train_X # train_X
         target  = train_Y # labels
@@ -144,12 +145,29 @@ if __name__ == '__main__':
                 for res in target:
                     tokens = set(nltk.word_tokenize(t))
                     tokens = list(filter(lambda x: x.lower() not in stop_words_eng and x.lower() 
-                            not in stop_words_fr and len(x) >=3, tokens)) # and x.lower()!= 'Subject' 
+                            not in stop_words_fr and len(x) >=3, tokens)) # and x.lower()!= 'subject' 
                     tokens = [w for w in tokens if re.search('[a-zA-Z]', w)]
                     dataTuple = (tokens,res)
         tokenarray.append(dataTuple)
+        extractTokens = tokenarray
         # End of Extract tokens
-    
+        corpus = extractTokens
+        for tokens, labels in corpus:
+            for item in tokens:
+                if item not in uniqueWords:
+                    uniqueWords.append(item)
+        #return uniqueWords
+        #End of get_features
+        #Call ExtractFeatures from within
+         features = {}
+         #type(uniqueWords)
+         for word in extractTokens: 
+                if word in uniqueWords:
+                    features[word] = True
+                else:
+                    features[word] = False
+         #return features
+         trainedDataSet = nltk.classify.apply_features(features,extractTokens)
     
     
     result = self.get_features(extractTokens)

@@ -126,12 +126,13 @@ if __name__ == '__main__':
     data = pd.read_csv('emails.csv')
     train_X, test_X, train_Y, test_Y = train_test_split(data["text"].values,
                                                             data["spam"].values,
-                                                            test_size = 0.25,
+                                                            test_size = 0.90,
                                                             random_state = 50,
                                                             shuffle = True,
                                                             stratify=data["spam"].values)
     classifier = SpamClassifier()
     classifier_model, model_word_features = classifier.train(train_X, train_Y)
+    
     predicted,accuracy = classifier.predict(test_X)
     print(accuracy)
     model_name = 'spam_classifier_model.pk'
