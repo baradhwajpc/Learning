@@ -207,3 +207,60 @@ if __name__ == '__main__':
             tokens = [w for w in tokens if re.search('[a-zA-Z]', w)]
             dataTuple = (tokens,res)
         tokenArray.append(dataTuple)
+        
+        
+temp = {}
+
+template = 'Subject: This is the first line.This is the first line.This is the first line.This is the first line.This is the first line.\n' \
+'Subject: This is the second line.This is the second line.This is the second line.This is the second line.This is the second line.\n' \
+'Subject: This is the third line.This is the third line.This is the third line.This is the third line.This is the third line.This is the third line.'
+
+pattern1 = re.compile(r'[\r\n][\r\n]+', re.DOTALL)
+vals = pattern1.split(template)
+for email in vals:
+    if email.startswith('Subject:'):
+        temp[email[0:29]]  = email
+    else:
+        print(2)
+
+
+
+
+
+ss = '\n'      
+line =            'Subject:010101010555454578774452314881\n'\
+'Subject: aaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb tttttttttttttttttttttttttttttttttttttttttttt\n'\
+'Subject: bbbb bababababababababrorororokkkkkkkkkkkkkkkkk \n'\
+'Subject: ccccdddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\n'\
+'Subject: ddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n'\
+'Subject: eeefffffffffffffffffffffffffffffffffffffffffrrrrrrrrrrrrrrwwwwwwwwwwwwwe\n'
+
+Subject:0101010105554545787744
+
+vals = pattern1.split(line)
+for email in vals:
+    print(email[0:29])
+    
+ttt = line+ ss + template
+'and (text in ['\n', '\r\n'])):
+pattern1 = re.compile(r'[\r\n][\r\n]+', re.DOTALL)
+vals = pattern1.split(ttt)
+for email in vals:
+    if email.startswith('Subject:'):
+        print(email)
+    else:
+        print(2)
+
+
+
+for text in intext:
+
+tt = ttt.split('Subject')
+if(tt.startswith('Subject:')):  
+     print(text)
+else:
+     print('2: '+text)
+if line in ['\n', '\r\n']:
+    print(1)
+else:
+    print(2)
